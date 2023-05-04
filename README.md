@@ -29,7 +29,7 @@
       cisco@inserthostnamehere:~/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages$ ls
         ncs-5.7.6-tailf-hcc-5.0.3.tar.gz  tailf-hcc
 #### d - move this package to nso packages directory:
-      cisco@inserthcd /var/opt/ncs/packages//tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages$ cd /var/opt/ncs/packages/
+      cisco@inserthostnamehere: /var/opt/ncs/packages//tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages$ cd /var/opt/ncs/packages/
       cisco@inserthostnamehere:/var/opt/ncs/packages$ cp -r /home/cisco/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages/tailf-hcc/ .
       cisco@inserthostnamehere:/var/opt/ncs/packages$ ls
         tailf-hcc
