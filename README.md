@@ -119,7 +119,7 @@
 
 
 
-## 3 - Configure high-availability:
+## 4 - Configure high-availability:
  
 #### a - enter nso:
        cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
@@ -178,7 +178,7 @@
         cisco@ncs(config)#
 
 
-## 4 - Configure hcc:
+## 5 - Configure hcc:
 
 #### a - load merge hcc configuration:
        cisco@ncs(config)# load merge terminal
@@ -245,7 +245,7 @@
         Commit complete.
         cisco@ncs(config)# 
 
-## 5 - testing GoBGP integration with nso on first node:
+## 6 - testing GoBGP integration with nso on first node:
 
 #### a - exit config mode:
        cisco@ncs(config)# exit
@@ -259,7 +259,7 @@
         Stockholm  -     -        30.1.1.1  -            -          
 
        
-## 6 - repeat the exact same steps for the secondary node
+## 7 - repeat the exact same steps for the secondary node
 
 #### a - expected gobgp status:
         cisco@ncs# show hcc 
@@ -270,7 +270,7 @@
         Stockholm  4783  running  30.1.1.1  ESTABLISHED  true       
 
 
-## 7 - enable high-availability:
+## 8 - enable high-availability:
 
 #### a - on ubuntu-Lisbon:
        cisco@ncs# high-availability enable 
@@ -310,7 +310,7 @@
         Stockholm  30.1.1.2  
         cisco@ncs# 
 
-## 7 - CDB replication test:
+## 9 - CDB replication test:
        
 #### a - create an devices authgroups on ubuntu-Lisbon:
        cisco@ncs# config  
@@ -340,3 +340,65 @@
         default-map remote-password $9$3oVkVgMlZTTvBUyB2BI+qwND6wKbSQMqPSRpGh56FFY=
         !
         cisco@ncs#
+
+#### c - delete devices authgroups config on ubuntu-Lisbon:
+        cisco@ncs(config-group-admin)# top
+        cisco@ncs(config)# no devices authgroups group admin 
+        cisco@ncs(config)# commit dry-run 
+        cli {
+        local-node {
+                data  devices {
+                        authgroups {
+                -        group admin {
+                -            default-map {
+                -                remote-name admin;
+                -                remote-password $9$hV5lq4FVK+37qpzaOBYqPhLGeH1Ypn7bv0Bnd8JadZw=;
+                -            }
+                -        }
+                        }
+                }
+        }
+        }
+        cisco@ncs(config)# commit 
+        Commit complete.
+        cisco@ncs(config)# 
+
+#### d - show running-config devices authgroups on ubuntu-Stockholm:
+        cisco@ncs# show running-config devices authgroups
+        % No entries found.
+        cisco@ncs# 
+
+## 10 - fail-over test:
+       
+#### a - shut down ubuntu-Lisbon:
+        click on the red button
+#### b - on ubuntu-Stockholm:
+        cisco@ncs# show high-availability status
+        high-availability status mode none
+        high-availability status assigned-role slave
+        high-availability status be-slave-result "error (25) - could not connect to master"
+        high-availability status master-id Lisbon
+        high-availability status read-only-mode false
+        cisco@ncs# 
+        cisco@ncs# 
+
+#### c - ubuntu-Stockholm will become master after all the attempts to connect to ubuntu-Lisbon:
+        cisco@ncs# show high-availability status
+        high-availability status mode master
+        high-availability status current-id Stockholm
+        high-availability status assigned-role master
+        high-availability status read-only-mode false
+        cisco@ncs# 
+
+#### d - turn on ubuntu-Lisbon and check high-availability status:
+        cisco@ncs# show high-availability status
+        high-availability status mode slave
+        high-availability status current-id Lisbon
+        high-availability status assigned-role slave
+        high-availability status be-slave-result initialized
+        high-availability status master-id Stockholm
+        high-availability status read-only-mode false
+
+#### e - disable high-availability on both nodes and enable it again:
+
+
