@@ -1,4 +1,4 @@
-# DEVWKS-2440
+# Staying a Step Ahead of Disasters: NSO Geo redundancy high availability
 
 ## 1 - Login to dcloud:
 #### a - Discover the topology
