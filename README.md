@@ -9,6 +9,7 @@
 ## 2 - connect to ubuntu-Lisbon:
        cisco@inserthostnamehere:~$ ncs --status | grep status
 #### a - login to nso and make sure there are no packages there:
+      cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
       cisco@ncs# show packages package 
         % No entries found.
       cisco@ncs# 
