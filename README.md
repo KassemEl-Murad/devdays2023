@@ -65,7 +65,7 @@
 
 ## 3 - Install gobgp: 
 #### a - Go to gobgp directory:
-       cisco@inserthostnamehere:~/devdays2023/gobgp$ $ cd /home/cisco/devdays2023/gobgp 
+       cisco@inserthostnamehere:/var/opt/ncs/packages$ cd /home/cisco/devdays2023/tailf-hcc/ 
        cisco@inserthostnamehere:~/devdays2023/gobgp$ ls
         gobgp_3.8.0_linux_amd64.tar.gz  gobgpd.conf
 #### b - extract gobgp_3.8.0_linux_amd64.tar.gz:
@@ -88,14 +88,11 @@
         peer-as = 1
 #### d - run gobgp deamon:
        cisco@inserthostnamehere:~/devdays2023/gobgp$ sudo ./gobgpd -f gobgpd.conf
-        {"level":"info","msg":"gobgpd started","time":"2023-05-04T17:45:38Z"}
-        {"Topic":"Config","level":"info","msg":"Finished reading the config file","time":"2023-05-04T17:45:38Z"}
-        {"Key":"10.1.1.1","Topic":"config","level":"info","msg":"Add Peer","time":"2023-05-04T17:45:38Z"}
-        {"Key":"10.1.1.1","Topic":"Peer","level":"info","msg":"Add a peer configuration","time":"2023-05-04T17:45:38Z"}
-        {"Key":"10.1.1.1","State":"BGP_FSM_OPENCONFIRM","Topic":"Peer","level":"info","msg":"Peer Up","time":"2023-05-04T17:45:40Z"}
-        ^X^C{"level":"info","msg":"stopping gobgpd server","time":"2023-05-04T17:46:12Z"}
-        {"Key":"10.1.1.1","Topic":"Peer","level":"info","msg":"Delete a peer configuration","time":"2023-05-04T17:46:12Z"}
-        {"Key":"10.1.1.1","Reason":"dying","State":"BGP_FSM_ESTABLISHED","Topic":"Peer","level":"info","msg":"Peer Down","time":"2023-05-04T17:46:12Z"}
+        {"level":"info","msg":"gobgpd started","time":"2023-05-04T21:39:34Z"}
+        {"Topic":"Config","level":"info","msg":"Finished reading the config file","time":"2023-05-04T21:39:34Z"}
+        {"Key":"10.1.1.1","Topic":"config","level":"info","msg":"Add Peer","time":"2023-05-04T21:39:34Z"}
+        {"Key":"10.1.1.1","Topic":"Peer","level":"info","msg":"Add a peer configuration","time":"2023-05-04T21:39:34Z"}
+        {"Key":"10.1.1.1","State":"BGP_FSM_OPENCONFIRM","Topic":"Peer","level":"info","msg":"Peer Up","time":"2023-05-04T21:39:42Z"}
 
        
 #### e - stop nso deamon:
@@ -149,15 +146,41 @@
 
 
 #### d - click on enter then control + d then commit:
-       0 bytes parsed in 12.51 sec (0 bytes/sec)
-       cisco@ncs(config)# commit 
-       Commit complete.
+        0 bytes parsed in 7.53 sec (0 bytes/sec)
+        cisco@ncs(config)# commit dry-run 
+        cli {
+        local-node {
+                data  high-availability {
+                +    token $9$XrjhhNHOYhhNi1StjHu8ZNVcUL42D28Rfgu1aeFhcWM=;
+                +    ha-node Lisbon {
+                +        address 10.1.1.2;
+                +        nominal-role master;
+                +    }
+                +    ha-node Stockholm {
+                +        address 30.1.1.2;
+                +        nominal-role slave;
+                +        failover-master true;
+                +    }
+                        settings {
+                +        enable-failover true;
+                        start-up {
+                +            assume-nominal-role true;
+                +            join-ha true;
+                        }
+                        consensus {
+                        }
+                        }
+                }
+        }
+        }
+        cisco@ncs(config)# commit 
+        Commit complete.
+        cisco@ncs(config)#
 
 
 ## 4 - Configure hcc:
 
 #### a - load merge hcc configuration:
-       cisco@ncs# config 
        cisco@ncs(config)# load merge terminal
         Loading.
 #### b - paste the config and commit:
@@ -186,9 +209,41 @@
 
 
 #### d - click on enter then control + d then commit:
-       0 bytes parsed in 1.02 sec (0 bytes/sec)
-       cisco@ncs(config)# commit 
-       Commit complete.
+        0 bytes parsed in 16.83 sec (0 bytes/sec)
+        cisco@ncs(config)# commit dry-run 
+        cli {
+        local-node {
+                data  hcc {
+                +    enabled;
+                +    vip-address [ 10.2.1.1 ];
+                        bgp {
+                +        node Lisbon {
+                +            enabled;
+                +            gobgp-bin-dir /usr/bin;
+                +            as 11;
+                +            router-id 10.1.1.2;
+                +            neighbor 10.1.1.1 {
+                +                as 1;
+                +                enabled;
+                +            }
+                +        }
+                +        node Stockholm {
+                +            enabled;
+                +            gobgp-bin-dir /usr/bin;
+                +            as 22;
+                +            router-id 30.1.1.2;
+                +            neighbor 30.1.1.1 {
+                +                as 2;
+                +                enabled;
+                +            }
+                +        }
+                        }
+                }
+        }
+        }
+        cisco@ncs(config)# commit 
+        Commit complete.
+        cisco@ncs(config)# 
 
 ## 5 - testing GoBGP integration with nso on first node:
 
