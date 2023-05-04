@@ -16,7 +16,7 @@
         cisco@inserthostnamehere:~$ 
 #### b - login to nso and make sure there are no packages there:
       cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
-      cisco@ncs# show packages package 
+      cisco@ncs# show packages  
         % No entries found.
       cisco@ncs# 
 
@@ -65,7 +65,7 @@
 
 ## 3 - Install gobgp: 
 #### a - Go to gobgp directory:
-       cisco@inserthostnamehere:/var/opt/ncs/packages$ cd /home/cisco/devdays2023/tailf-hcc/ 
+       cisco@inserthostnamehere:/var/opt/ncs/packages$ cd /home/cisco/devdays2023/gobgp 
        cisco@inserthostnamehere:~/devdays2023/gobgp$ ls
         gobgp_3.8.0_linux_amd64.tar.gz  gobgpd.conf
 #### b - extract gobgp_3.8.0_linux_amd64.tar.gz:
@@ -313,6 +313,7 @@
 ## 7 - CDB replication test:
        
 #### a - create an devices authgroups on ubuntu-Lisbon:
+       cisco@ncs# config  
        cisco@ncs(config)# devices authgroups group admin default-map remote-name admin remote-password admin 
         cisco@ncs(config-group-admin)# commit dry-run 
         cli {
