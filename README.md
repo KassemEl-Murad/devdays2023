@@ -3,8 +3,8 @@
 ## 1 - Login to dcloud:
 #### a - Discover the topology
 #### b - Connect to the anyconnect dcloud VPN
-#### c - Connect to CML
-#### d - Connect to Ubuntu server using cml-ui
+#### c - Connect to CML using cml-ui
+
 
 ## 2 - connect to ubuntu-Lisbon:
 
