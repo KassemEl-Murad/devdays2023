@@ -7,13 +7,22 @@
 #### d - Connect to Ubuntu server using cml-ui
 
 ## 2 - connect to ubuntu-Lisbon:
-       cisco@inserthostnamehere:~$ ncs --status | grep status
+
 #### a - login to nso and make sure there are no packages there:
+       cisco@inserthostnamehere:~$ ncs --status | grep status
+        status: started
+        cluster status:
+                db=running id=28 priority=1 path=/ncs:devices/device/live-status-protocol/device-type
+        cisco@inserthostnamehere:~$ 
+#### b - login to nso and make sure there are no packages there:
       cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
       cisco@ncs# show packages package 
         % No entries found.
       cisco@ncs# 
-#### b - discover tailf-hcc directory:
+
+#### c - exit nso:
+        cisco@ncs# exit
+#### d - discover tailf-hcc directory:
       cisco@inserthostnamehere:~/devdays2023/tailf-hcc$ cd /home/cisco/devdays2023/tailf-hcc/
       cisco@inserthostnamehere:~/devdays2023/tailf-hcc$ ls
         README.signature
@@ -24,17 +33,17 @@
         ncs-5.7.6-tailf-hcc-project-5.0.3.tar.gz
         ncs-5.7.6-tailf-hcc-project-5.0.3.tar.gz.signature
         tailf.cer
-#### c - go to the actual tail-f package:
+#### e - go to the actual tail-f package:
       cisco@inserthostnamehere:~/devdays2023/tailf-hcc$ cd ncs-5.7.6-tailf-hcc-project-5.0.3/packages/
       cisco@inserthostnamehere:~/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages$ ls
         ncs-5.7.6-tailf-hcc-5.0.3.tar.gz  tailf-hcc
-#### d - move this package to nso packages directory:
+#### f - move this package to nso packages directory:
       cisco@inserthostnamehere: /var/opt/ncs/packages//tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages$ cd /var/opt/ncs/packages/
       cisco@inserthostnamehere:/var/opt/ncs/packages$ cp -r /home/cisco/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages/tailf-hcc/ .
       cisco@inserthostnamehere:/var/opt/ncs/packages$ ls
         tailf-hcc
 
-#### d - enter nso and do a package reload:
+#### g - enter nso and do a package reload:
       cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
       cisco@ncs# packages reload 
 
@@ -51,7 +60,7 @@
             Subsystem started: tailf_hcc_server
         cisco@ncs# 
 
-#### d - exit nso:
+#### h - exit nso:
         cisco@ncs# exit
 
 ## 3 - Install gobgp: 
