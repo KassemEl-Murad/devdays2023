@@ -107,6 +107,9 @@
         -rwxr-xr-x 1 root root 15683584 May  4 17:55 gobgpd
        cisco@inserthostnamehere:/usr/bin$ sudo chmod u+s /usr/bin/gobgpd
        cisco@inserthostnamehere:/usr/bin$ sudo chmod u+s /usr/bin/gobgp
+       cisco@inserthostnamehere:/usr/bin$ ls -la gobgp*
+        -rwsr-xr-x 1 root root 14589952 May  4 20:42 gobgp
+        -rwsr-xr-x 1 root root 15683584 May  4 20:42 gobgpd
 
 
 
@@ -192,6 +195,83 @@
         Stockholm  -     -        30.1.1.1  -            -          
 
        
-## 5 - repeat the exact same steps for the secondary node
-
 ## 6 - repeat the exact same steps for the secondary node
+
+#### a - expected gobgp status:
+        cisco@ncs# show hcc 
+                BGPD  BGPD                                       
+        NODE ID    PID   STATUS   ADDRESS   STATE        CONNECTED  
+        ------------------------------------------------------------
+        Lisbon     -     -        10.1.1.1  -            -          
+        Stockholm  4783  running  30.1.1.1  ESTABLISHED  true       
+
+
+## 7 - enable high-availability:
+
+#### a - on ubuntu-Lisbon:
+       cisco@ncs# high-availability enable 
+        result enabled
+        cisco@ncs# high-availability be-master 
+        result ok
+        cisco@ncs# 
+       
+#### b - on ubuntu-Stockholm:
+        cisco@ncs# high-availability enable 
+        result enabled
+        cisco@ncs# high-availability be-slave-to node 
+        Possible completions:
+        Lisbon  Stockholm
+        cisco@ncs# high-availability be-slave-to node Lisbon 
+        result Attempting to be slave to node Lisbon
+        cisco@ncs# 
+       
+#### c - on ubuntu-Stockholm:
+        cisco@ncs# show high-availability status 
+        high-availability status mode slave
+        high-availability status current-id Stockholm
+        high-availability status assigned-role slave
+        high-availability status be-slave-result connected
+        high-availability status master-id Lisbon
+        high-availability status read-only-mode false
+        cisco@ncs# 
+       
+#### d - on ubuntu-Lisbon:
+        cisco@ncs# show high-availability status 
+        high-availability status mode master
+        high-availability status current-id Lisbon
+        high-availability status assigned-role master
+        high-availability status read-only-mode false
+        ID         ADDRESS   
+        ---------------------
+        Stockholm  30.1.1.2  
+        cisco@ncs# 
+
+## 7 - CDB replication test:
+       
+#### a - create an devices authgroups on ubuntu-Lisbon:
+       cisco@ncs(config)# devices authgroups group admin default-map remote-name admin remote-password admin 
+        cisco@ncs(config-group-admin)# commit dry-run 
+        cli {
+                local-node {
+                        data  devices {
+                                authgroups {
+                        +        group admin {
+                        +            default-map {
+                        +                remote-name admin;
+                        +                remote-password $9$3oVkVgMlZTTvBUyB2BI+qwND6wKbSQMqPSRpGh56FFY=;
+                        +            }
+                        +        }
+                                }
+                        }
+                }
+        }
+        cisco@ncs(config-group-admin)# commit 
+        Commit complete.
+        cisco@ncs(config-group-admin)# 
+#### b - on ubuntu-Stockholm:
+        cisco@ncs# show running-config devices authgroups 
+        devices authgroups group admin
+        default-map remote-name admin
+        default-map remote-password $9$3oVkVgMlZTTvBUyB2BI+qwND6wKbSQMqPSRpGh56FFY=
+        !
+        cisco@ncs#
