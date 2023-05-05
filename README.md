@@ -375,6 +375,18 @@
         cisco@ncs(config)# commit 
         Commit complete.
         cisco@ncs(config)# 
+
+#### i - exit config mode:
+       cisco@ncs(config)# exit
+
+#### j - check gobgp status:
+        cisco@ncs# show hcc
+                BGPD  BGPD                                       
+        NODE ID    PID   STATUS   ADDRESS   STATE        CONNECTED  
+        ------------------------------------------------------------
+        Lisbon     -     -        10.1.1.1  -            -          
+        Stockholm  1013  running  30.1.1.1  ESTABLISHED  true       
+
        
 
 
