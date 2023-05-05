@@ -21,7 +21,41 @@
 
 ## 2 - connect to ubuntu-Lisbon:
 
-#### a - login to nso and make sure there are no packages there:
+### A - test gobgp: 
+
+#### a - make sure gobgp works :
+       cisco@inserthostnamehere:~$ gobgp --version
+        gobgp version 3.8.0
+
+#### b - link to install GoBGP (optional):
+      https://osrg.github.io/gobgp/
+
+
+#### c - test gobgp deamon (optional):
+       cisco@inserthostnamehere:/var/opt/ncs/packages$ cd /home/cisco/devdays2023/gobgp/
+       cisco@inserthostnamehere:~/devdays2023/gobgp$ cat gobgpd.conf
+       [global.config]
+         as = 11
+         router-id = "10.1.1.2"
+
+       [[neighbors]]
+        [neighbors.config]
+        neighbor-address = "10.1.1.1"
+        peer-as = 1
+#### d - run gobgp deamon (optional):
+       cisco@inserthostnamehere:~/devdays2023/gobgp$ sudo ./gobgpd -f gobgpd.conf
+        {"level":"info","msg":"gobgpd started","time":"2023-05-04T21:39:34Z"}
+        {"Topic":"Config","level":"info","msg":"Finished reading the config file","time":"2023-05-04T21:39:34Z"}
+        {"Key":"10.1.1.1","Topic":"config","level":"info","msg":"Add Peer","time":"2023-05-04T21:39:34Z"}
+        {"Key":"10.1.1.1","Topic":"Peer","level":"info","msg":"Add a peer configuration","time":"2023-05-04T21:39:34Z"}
+        {"Key":"10.1.1.1","State":"BGP_FSM_OPENCONFIRM","Topic":"Peer","level":"info","msg":"Peer Up","time":"2023-05-04T21:39:42Z"}
+
+       
+#### e - stop nso deamon (optional):
+       control + c
+
+### B - load tail-f package to nso:
+#### a - make sure that nso is up and running:
        cisco@inserthostnamehere:~$ ncs --status | grep status
         status: started
         cluster status:
@@ -58,41 +92,8 @@
 #### h - exit nso:
         cisco@ncs# exit
 
-## 3 - test gobgp: 
 
-#### a - make sure gobgp works :
-       cisco@inserthostnamehere:/var/opt/ncs/packages$ gobgp --version
-        gobgp version 3.8.0
-
-#### b - link to install GoBGP (optional):
-      https://osrg.github.io/gobgp/
-
-
-#### c - test gobgp deamon (optional):
-       cisco@inserthostnamehere:/var/opt/ncs/packages$ cd /home/cisco/devdays2023/gobgp/
-       cisco@inserthostnamehere:~/devdays2023/gobgp$ cat gobgpd.conf
-       [global.config]
-         as = 11
-         router-id = "10.1.1.2"
-
-       [[neighbors]]
-        [neighbors.config]
-        neighbor-address = "10.1.1.1"
-        peer-as = 1
-#### d - run gobgp deamon (optional):
-       cisco@inserthostnamehere:~/devdays2023/gobgp$ sudo ./gobgpd -f gobgpd.conf
-        {"level":"info","msg":"gobgpd started","time":"2023-05-04T21:39:34Z"}
-        {"Topic":"Config","level":"info","msg":"Finished reading the config file","time":"2023-05-04T21:39:34Z"}
-        {"Key":"10.1.1.1","Topic":"config","level":"info","msg":"Add Peer","time":"2023-05-04T21:39:34Z"}
-        {"Key":"10.1.1.1","Topic":"Peer","level":"info","msg":"Add a peer configuration","time":"2023-05-04T21:39:34Z"}
-        {"Key":"10.1.1.1","State":"BGP_FSM_OPENCONFIRM","Topic":"Peer","level":"info","msg":"Peer Up","time":"2023-05-04T21:39:42Z"}
-
-       
-#### e - stop nso deamon (optional):
-       control + c
-
-
-## 4 - Configure high-availability:
+## 3 - Configure high-availability:
  
 #### a - enter nso:
        cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
@@ -151,7 +152,7 @@
         cisco@ncs(config)#
 
 
-## 5 - Configure hcc:
+## 4 - Configure hcc:
 
 #### a - load merge hcc configuration:
        cisco@ncs(config)# load merge terminal
@@ -218,7 +219,7 @@
         Commit complete.
         cisco@ncs(config)# 
 
-## 6 - testing GoBGP integration with nso on first node:
+## 5 - testing GoBGP integration with nso on first node:
 
 #### a - exit config mode:
        cisco@ncs(config)# exit
@@ -390,7 +391,7 @@
        
 
 
-## 8 - enable high-availability:
+## 6 - enable high-availability:
 
 #### a - on ubuntu-Lisbon:
        cisco@ncs# high-availability enable 
@@ -427,7 +428,7 @@
         Stockholm  30.1.1.2  
         cisco@ncs# 
 
-## 9 - CDB replication test:
+## 7 - CDB replication test:
        
 #### a - create an devices authgroups on ubuntu-Lisbon:
        cisco@ncs# config  
@@ -485,7 +486,7 @@
         % No entries found.
         cisco@ncs# 
 
-## 10 - fail-over test:
+## 8 - fail-over test:
        
 #### a - shut down ubuntu-Lisbon:
         click on the red button
