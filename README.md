@@ -233,19 +233,14 @@
 
        
 ## 7 - repeat the exact same steps for the secondary node
-
-#### a - go to the tail-f package:
-      cisco@inserthostnamehere:~$ cd /home/cisco/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages/
-      cisco@inserthostnamehere:~/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages$ ls
-        ncs-5.7.6-tailf-hcc-5.0.3.tar.gz  tailf-hcc   
-
-#### b - move this package to nso packages directory:
-        cisco@inserthostnamehere: /var/opt/ncs/packages//tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages$ cd /var/opt/ncs/packages/
+ 
+#### a - copy tail-f package to nso packages directory:
+        cisco@inserthostnamehere:~$  cd /var/opt/ncs/packages/
         cisco@inserthostnamehere:/var/opt/ncs/packages$ cp -r /home/cisco/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages/tailf-hcc/ .
         cisco@inserthostnamehere:/var/opt/ncs/packages$ ls
         tailf-hcc
        
-#### c -  enter nso and do a package reload:
+#### b -  enter nso and do a package reload:
         cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
         cisco@ncs# packages reload 
 
@@ -263,11 +258,11 @@
         cisco@ncs# 
 
 
-#### d - load merge high-availability configuration:
+#### c - load merge high-availability configuration:
        cisco@ncs# config 
        cisco@ncs(config)# load merge terminal
         Loading.
-#### e - paste the config and commit:
+#### d - paste the config and commit:
         high-availability token $9$XrjhhNHOYhhNi1StjHu8ZNVcUL42D28Rfgu1aeFhcWM=
         high-availability settings enable-failover true
         high-availability settings start-up assume-nominal-role true
@@ -284,7 +279,7 @@
         !
 
 
-#### f - click on enter then control + d then commit:
+#### e - click on enter then control + d then commit:
         0 bytes parsed in 7.53 sec (0 bytes/sec)
         cisco@ncs(config)# commit dry-run 
         cli {
@@ -316,10 +311,10 @@
         Commit complete.
         cisco@ncs(config)#
 
-#### g - load merge hcc configuration:
+#### f - load merge hcc configuration:
        cisco@ncs(config)# load merge terminal
         Loading.
-#### h - paste the config and commit:
+#### g - paste the config and commit:
         hcc enabled
         hcc vip-address [ 10.2.1.1 ]
         hcc bgp node Lisbon 
@@ -344,7 +339,7 @@
         !
 
 
-#### i - click on enter then control + d then commit:
+#### h - click on enter then control + d then commit:
         0 bytes parsed in 16.83 sec (0 bytes/sec)
         cisco@ncs(config)# commit dry-run 
         cli {
