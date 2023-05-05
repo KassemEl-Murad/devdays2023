@@ -62,7 +62,11 @@
        cisco@inserthostnamehere:/var/opt/ncs/packages$ gobgp --version
         gobgp version 3.8.0
 
-#### b - test gobgp deamon (optional):
+#### b - link to install GoBGP (optional):
+      https://osrg.github.io/gobgp/
+
+
+#### c - test gobgp deamon (optional):
        cisco@inserthostnamehere:/var/opt/ncs/packages$ cd /home/cisco/devdays2023/gobgp/
        cisco@inserthostnamehere:~/devdays2023/gobgp$ cat gobgpd.conf
        [global.config]
@@ -73,7 +77,7 @@
         [neighbors.config]
         neighbor-address = "10.1.1.1"
         peer-as = 1
-#### c - run gobgp deamon (optional):
+#### d - run gobgp deamon (optional):
        cisco@inserthostnamehere:~/devdays2023/gobgp$ sudo ./gobgpd -f gobgpd.conf
         {"level":"info","msg":"gobgpd started","time":"2023-05-04T21:39:34Z"}
         {"Topic":"Config","level":"info","msg":"Finished reading the config file","time":"2023-05-04T21:39:34Z"}
