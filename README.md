@@ -389,9 +389,6 @@
 #### b - on ubuntu-Stockholm:
         cisco@ncs# high-availability enable 
         result enabled
-        cisco@ncs# high-availability be-slave-to node 
-        Possible completions:
-        Lisbon  Stockholm
         cisco@ncs# high-availability be-slave-to node Lisbon 
         result Attempting to be slave to node Lisbon
         cisco@ncs# 
