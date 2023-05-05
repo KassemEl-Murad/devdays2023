@@ -12,7 +12,9 @@
                 Credentials:
                 username: guest
                 password: C1sco12345
-#### e - devices Credentials:
+#### e - turn on devices:
+        click on the start button
+#### f - devices Credentials:
         username: cisco
         password: cisco
 
