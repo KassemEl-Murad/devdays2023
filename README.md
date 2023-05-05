@@ -5,7 +5,13 @@
 #### b - Discover the topology
 #### c - Connect to the anyconnect dcloud VPN
 #### d - Connect to CML using cml-ui
-        will be shown when you click on the cml
+        Credentials will be shown when you click on the cml
+        similar to: 
+                IP Address:
+                198.18.134.1
+                Credentials:
+                username: guest
+                password: C1sco12345
 #### e - devices Credentials:
         username: cisco
         password: cisco
