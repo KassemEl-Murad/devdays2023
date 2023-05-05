@@ -23,7 +23,7 @@
 
 ### A - test gobgp: 
 
-#### a - make sure gobgp is installed :
+#### a - make sure gobgp is installed:
        cisco@inserthostnamehere:~$ gobgp --version
         gobgp version 3.8.0
 
