@@ -59,10 +59,11 @@
 ## 3 - test gobgp: 
 
 #### a - make sure gobgp works :
-       cisco@inserthostnamehere:~/devdays2023/gobgp$ gobgp --version
+       cisco@inserthostnamehere:/var/opt/ncs/packages$ gobgp --version
         gobgp version 3.8.0
 
 #### b - test gobgp deamon (optional):
+       cisco@inserthostnamehere:/var/opt/ncs/packages$ cd /home/cisco/devdays2023/gobgp/
        cisco@inserthostnamehere:~/devdays2023/gobgp$ cat gobgpd.conf
        [global.config]
          as = 11
