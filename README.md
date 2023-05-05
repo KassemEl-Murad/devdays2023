@@ -224,7 +224,7 @@
 ## 7 - repeat the exact same steps for the secondary node
 
 #### a - go to the tail-f package:
-      cisco@inserthostnamehere:~/devdays2023/tailf-hcc$ cd /home/cisco/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages/
+      cisco@inserthostnamehere:~$ cd /home/cisco/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages/
       cisco@inserthostnamehere:~/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages$ ls
         ncs-5.7.6-tailf-hcc-5.0.3.tar.gz  tailf-hcc   
 
