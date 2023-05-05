@@ -89,17 +89,12 @@
             Subsystem started: tailf_hcc_server
         cisco@ncs# 
 
-#### h - exit nso:
-        cisco@ncs# exit
-
-
 ## 3 - Configure high-availability:
  
-#### a - enter nso:
-       cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
+#### a - enter config mode:
+       cisco@ncs# config
 
-#### b - load merge high-availability configuration:
-       cisco@ncs# config 
+#### b - load merge high-availability configuration: 
        cisco@ncs(config)# load merge terminal
         Loading.
 #### c - paste the config and commit:
@@ -234,14 +229,18 @@
 
        
 ## 7 - repeat the exact same steps for the secondary node
+
+#### a - make sure gobgp is installed:
+       cisco@inserthostnamehere:~$ gobgp --version
+        gobgp version 3.8.0
  
-#### a - copy tail-f package to nso packages directory:
+#### b - copy tail-f package to nso packages directory:
         cisco@inserthostnamehere:~$  cd /var/opt/ncs/packages/
         cisco@inserthostnamehere:/var/opt/ncs/packages$ cp -r /home/cisco/devdays2023/tailf-hcc/ncs-5.7.6-tailf-hcc-project-5.0.3/packages/tailf-hcc/ .
         cisco@inserthostnamehere:/var/opt/ncs/packages$ ls
         tailf-hcc
        
-#### b -  enter nso and do a package reload:
+#### c -  enter nso and do a package reload:
         cisco@inserthostnamehere:/usr/bin$ ncs_cli -C
         cisco@ncs# packages reload 
 
@@ -259,11 +258,11 @@
         cisco@ncs# 
 
 
-#### c - load merge high-availability configuration:
+#### d - load merge high-availability configuration:
        cisco@ncs# config 
        cisco@ncs(config)# load merge terminal
         Loading.
-#### d - paste the config and commit:
+#### e - paste the config and commit:
         high-availability token $9$XrjhhNHOYhhNi1StjHu8ZNVcUL42D28Rfgu1aeFhcWM=
         high-availability settings enable-failover true
         high-availability settings start-up assume-nominal-role true
@@ -280,7 +279,7 @@
         !
 
 
-#### e - click on enter then control + d then commit:
+#### f - click on enter then control + d then commit:
         0 bytes parsed in 7.53 sec (0 bytes/sec)
         cisco@ncs(config)# commit dry-run 
         cli {
@@ -312,10 +311,10 @@
         Commit complete.
         cisco@ncs(config)#
 
-#### f - load merge hcc configuration:
+#### g - load merge hcc configuration:
        cisco@ncs(config)# load merge terminal
         Loading.
-#### g - paste the config and commit:
+#### h - paste the config and commit:
         hcc enabled
         hcc vip-address [ 10.2.1.1 ]
         hcc bgp node Lisbon 
@@ -340,7 +339,7 @@
         !
 
 
-#### h - click on enter then control + d then commit:
+#### i - click on enter then control + d then commit:
         0 bytes parsed in 16.83 sec (0 bytes/sec)
         cisco@ncs(config)# commit dry-run 
         cli {
@@ -377,10 +376,10 @@
         Commit complete.
         cisco@ncs(config)# 
 
-#### i - exit config mode:
+#### j - exit config mode:
        cisco@ncs(config)# exit
 
-#### j - check gobgp status:
+#### k - check gobgp status:
         cisco@ncs# show hcc
                 BGPD  BGPD                                       
         NODE ID    PID   STATUS   ADDRESS   STATE        CONNECTED  
