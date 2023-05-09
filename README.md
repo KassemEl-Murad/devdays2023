@@ -516,6 +516,5 @@
         high-availability status master-id Stockholm
         high-availability status read-only-mode false
 
-#### e - disable high-availability on both nodes and enable it again:
 
 
