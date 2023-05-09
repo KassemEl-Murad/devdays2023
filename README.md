@@ -499,7 +499,7 @@
         cisco@ncs# 
         cisco@ncs# 
 
-#### c - ubuntu-Stockholm will become master after all the attempts to connect to ubuntu-Lisbon:
+#### c - ubuntu-Stockholm will become primary after all the attempts to connect to ubuntu-Lisbon:
         cisco@ncs# show high-availability status
         high-availability status mode master
         high-availability status current-id Stockholm
