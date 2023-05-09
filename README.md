@@ -32,7 +32,7 @@
 
 
 #### c - test gobgp deamon (optional):
-       cisco@inserthostnamehere:/var/opt/ncs/packages$ cd /home/cisco/devdays2023/gobgp/
+       cisco@inserthostnamehere:~$ cd /home/cisco/devdays2023/gobgp/
        cisco@inserthostnamehere:~/devdays2023/gobgp$ cat gobgpd.conf
        [global.config]
          as = 11
