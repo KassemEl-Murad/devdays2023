@@ -3,8 +3,7 @@
 #### https://dcloud2-lon.cisco.com/event/395510/access
 ## 1 - Login to dcloud:
 #### a - please use your CEC credentials
-#### b - Discover the topology
-#### c - Connect to CML using cml-ui
+#### b - Connect to CML using cml-ui
         Credentials will be shown when you click on the cml
         similar to: 
                 IP Address:
@@ -12,9 +11,9 @@
                 Credentials:
                 username: guest
                 password: C1sco12345
-#### d - turn on devices:
+#### c - turn on devices:
         click on the start button
-#### e - devices Credentials:
+#### d - devices Credentials:
         username: cisco
         password: cisco
 
