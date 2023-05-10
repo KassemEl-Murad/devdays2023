@@ -4,8 +4,7 @@
 ## 1 - Login to dcloud:
 #### a - please use your CEC credentials
 #### b - Discover the topology
-#### c - Connect to the anyconnect dcloud VPN
-#### d - Connect to CML using cml-ui
+#### c - Connect to CML using cml-ui
         Credentials will be shown when you click on the cml
         similar to: 
                 IP Address:
@@ -13,9 +12,9 @@
                 Credentials:
                 username: guest
                 password: C1sco12345
-#### e - turn on devices:
+#### d - turn on devices:
         click on the start button
-#### f - devices Credentials:
+#### e - devices Credentials:
         username: cisco
         password: cisco
 
