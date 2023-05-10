@@ -1,5 +1,6 @@
 # Staying a Step Ahead of Disasters: NSO Geo redundancy high availability
 
+#### https://dcloud2-lon.cisco.com/event/395510/access
 ## 1 - Login to dcloud:
 #### a - please use your CEC credentials
 #### b - Discover the topology
